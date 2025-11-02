@@ -2,7 +2,7 @@ footer {
     background-color: var(--color-white);
     text-align: right;
     padding: 1rem 2rem;
-    font-family: var(--font-main);
+    font-family: var(--font-main), sans-serif;
     border-top: 1px solid var(--color-border);
     color: var(--color-text);
     font-size: var(--font-size-sm);

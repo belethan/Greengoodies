@@ -1,6 +1,6 @@
 .product-detail {
     background-color: var(--color-light-bg);
-    font-family: var(--font-main);
+    font-family: var(--font-main), sans-serif;
     padding-top: 3rem;
     padding-bottom: 3rem;
 }
