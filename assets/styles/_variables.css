@@ -1,0 +1,25 @@
+:root {
+    /* === Couleurs principales === */
+    --color-primary: #4f6b57;
+    --color-secondary: #6f7e70;
+    --color-light-bg: #fefcf7;
+    --color-dark: #222222;
+    --color-text: #444444;
+    --color-border: #dcdcdc;
+    --color-white: #ffffff;
+
+    /* === Typographie === */
+    --font-main: 'Inter', sans-serif;
+
+    /* === Tailles de police === */
+    --font-size-sm: 0.9rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.2rem;
+    --font-size-xl: 2rem;
+
+    /* === Breakpoints Bootstrap === */
+    --bp-mobile: 576px;
+    --bp-tablet: 768px;
+    --bp-desktop: 992px;
+    --bp-large: 1440px;
+}
