@@ -1,0 +1,97 @@
+/* === Bloc 1 === */
+.bloc1 {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 90vh;
+    background-color: var(--color-light-bg);
+    align-items: stretch; /* égalise la hauteur des colonnes */
+}
+
+/* Colonne texte */
+.bloc1-texte {
+    background-color: var(--color-bloc1-bg);
+    flex: 1 1 50%;
+    display: flex;
+    justify-content: center;   /* centre verticalement */
+    align-items: center;       /* centre horizontalement */
+    padding: 0 120px;          /* <-- plus d’espace à gauche et à droite */
+    text-align: center;
+}
+
+.bloc1-content {
+    max-width: 100%;
+}
+
+.bloc1-texte h1 {
+    font-size: 4rem;           /* <-- nouvelle taille du titre */
+    color: var(--color-dark);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.bloc1-texte p {
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+}
+
+/* Colonne image */
+.bloc1-image {
+    flex: 1 1 50%;
+    background-color: var(--color-light-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.bloc1-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* === Responsive === */
+@media (max-width: 1200px) {
+    .bloc1-texte {
+        padding: 0 80px;
+    }
+
+    .bloc1-texte h1 {
+        font-size: 3.2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .bloc1-texte {
+        padding: 0 60px;
+    }
+
+    .bloc1-texte h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .bloc1 {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .bloc1-texte,
+    .bloc1-image {
+        flex: 1 1 100%;
+        padding: 2rem;
+        text-align: center;
+        height: auto;
+    }
+
+    .bloc1-texte h1 {
+        font-size: 2.2rem;
+    }
+
+    .bloc1-image img {
+        width: 90%;
+        height: auto;
+    }
+}

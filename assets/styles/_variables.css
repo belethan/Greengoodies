@@ -2,18 +2,21 @@
     /* === Couleurs principales === */
     --color-primary: #4f6b57;
     --color-secondary: #6f7e70;
-    --color-light-bg: #fefcf7;
+    --color-light-bg: #FFFDF7; /* ancienne #FEFCF7 */
     --color-dark: #222222;
     --color-text: #444444;
     --color-border: #dcdcdc;
     --color-white: #ffffff;
+
+    /* === Nouvelle couleur pour bloc texte === */
+    --color-bloc1-bg: #E8F0E3;
 
     /* === Typographie === */
     --font-main: 'Inter', sans-serif;
 
     /* === Tailles de police === */
     --font-size-sm: 0.9rem;
-    --font-size-md: 1rem;
+    --font-size-md: 1.1rem;
     --font-size-lg: 1.2rem;
     --font-size-xl: 2rem;
 
