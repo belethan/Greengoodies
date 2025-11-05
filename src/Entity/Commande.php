@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -20,19 +21,17 @@ class Commande
     private ?string $numero = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $ModifiedAt = null;
+    private ?DateTimeImmutable $ModifiedAt = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 4, nullable: true)]
     private ?string $total = null;
 
-    /**
-     * @var Collection<int, user>
-     */
-    #[ORM\OneToMany(targetEntity: user::class, mappedBy: 'commande')]
-    private Collection $user;
+    // Dans l'entité Commande
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commandes')]
+    private ?User $user = null;
 
     /**
      * @var Collection<int, LigneCommande>
@@ -43,8 +42,7 @@ class Commande
     public function __construct()
     {
         // ✅ Initialise automatiquement la date de création à "maintenant"
-        $this->createdAt = new \DateTimeImmutable();
-        $this->user = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
         $this->ligneCommandes = new ArrayCollection();
     }
 
@@ -65,24 +63,24 @@ class Commande
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getModifiedAt(): ?\DateTimeImmutable
+    public function getModifiedAt(): ?DateTimeImmutable
     {
         return $this->ModifiedAt;
     }
 
-    public function setModifiedAt(?\DateTimeImmutable $ModifiedAt): static
+    public function setModifiedAt(?DateTimeImmutable $ModifiedAt): static
     {
         $this->ModifiedAt = $ModifiedAt;
 
@@ -101,35 +99,17 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection<int, user>
-     */
-    public function getUser(): Collection
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function addUser(user $user): static
+    public function setUser(?User $user): self
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-            $user->setCommande($this);
-        }
-
+        $this->user = $user;
         return $this;
     }
 
-    public function removeUser(user $user): static
-    {
-        if ($this->user->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getCommande() === $this) {
-                $user->setCommande(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, LigneCommande>

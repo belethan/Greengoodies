@@ -18,17 +18,21 @@ security:
             lazy: true
             provider: app_user_provider
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            form_login:
+                login_path: app.login    # Route pour le formulaire de login
+                check_path: app.login    # Route de soumission du formulaire
+                username_parameter: email  # L'email est utilisé pour l'identification
+                password_parameter: password  # Le mot de passe
+                default_target_path: app.principale  # Après la connexion, rediriger vers la page d'accueil
+            logout:
+                path: app.logout  # La route pour la déconnexion
+                target: app.principale   # Où rediriger après la déconnexion
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:
