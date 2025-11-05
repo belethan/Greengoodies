@@ -6,7 +6,7 @@
     <main class="page-principale">
 
         {# === Bloc 1 === #}
-        <section class="bloc1 container-fluid d-flex flex-column flex-md-row p-0">
+        <section class="bloc1 container d-flex flex-column flex-md-row p-0">
             {#  Bloc Texte #}
             <div class="bloc1-texte col-12 col-md-6 d-flex flex-column justify-content-center text-center text-md-start">
                 <div class="bloc1-content">
@@ -27,7 +27,7 @@
         {# === Bloc 2 — Produits === #}
         {% include 'pages/briques/_produitcards.html.twig' with { produits: produits } %}
         {# === Bloc 3 — Notre Conviction === #}
-        <section class="bloc3 container-fluid d-flex flex-column flex-md-row align-items-stretch p-0">
+        <section class="bloc3 container d-flex flex-column flex-md-row align-items-stretch p-0">
             {# Bloc texte #}
             <div class="bloc3-texte col-12 col-md-7 d-flex flex-column justify-content-end">
                 <div class="bloc3-content text-start">
@@ -39,12 +39,36 @@
                     </p>
                 </div>
             </div>
-
             {# Bloc image #}
             <div class="bloc3-image col-12 col-md-5 d-flex align-items-center justify-content-center">
                 <img src="{{ asset('img/static/fleurs.png') }}" alt="Fleurs" class="img-fluid">
             </div>
         </section>
+        {# === Bloc 4 — Nos Valeurs === #}
+        <section class="bloc4 container d-flex flex-column flex-md-row align-items-stretch p-0">
+            {# Image à gauche #}
+            <div class="bloc4-image col-12 col-md-5 d-flex align-items-center justify-content-center order-md-1">
+                <img src="{{ asset('img/static/poubelle.png') }}" alt="Poubelle" class="img-fluid">
+            </div>
+
+            {# Texte à droite #}
+            <div class="bloc4-texte col-12 col-md-7 d-flex flex-column justify-content-end align-items-end order-md-2">
+                {# Le conteneur est aligné à droite, mais le contenu est à gauche #}
+                <div class="bloc4-content">
+                    <h4>NOS VALEURS</h4>
+                    <p>
+                        Durabilité : Nous sélectionnons soigneusement des produits qui respectent l'environnement et
+                        favorisent la durabilité.<br>
+                        Éthique : Nous nous engageons à travailler avec des partenaires et des fournisseurs qui partagent
+                        nos valeurs éthiques.<br>
+                        Écologie : Nous encourageons des pratiques respectueuses de l'écosystème et privilégions les
+                        matériaux écologiques.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
     </main>
 {% endblock %}
 

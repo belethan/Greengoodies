@@ -6,6 +6,8 @@
     background-color: var(--color-light-bg);
     align-items: stretch;
     margin-bottom: 30px;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 
@@ -76,6 +78,9 @@
     height: 64.6vh;
     background-color: #EBE3D3;
     overflow: hidden;
+    margin-bottom: 0; /* ✅ suppression de tout espace sous le bloc3 */
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .bloc3-texte {
@@ -124,6 +129,104 @@
     height: 100%;
     object-fit: cover;
 }
+
+/* === Bloc 4 — Nos Valeurs === */
+.bloc4 {
+    height: 64.6vh;              /* identique à bloc3 ; si tu préfères: max-height: 646px; */
+    background-color: #E8F0E3;
+    overflow: hidden;
+    margin-top: 0;               /* collé à bloc3 */
+    padding-top: 0;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.bloc4-image {
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bloc4-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Le conteneur texte occupe la droite, et pousse le contenu contre la droite */
+.bloc4-texte {
+    background-color: #E8F0E3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;   /* en bas */
+    align-items: flex-end;       /* à droite */
+    padding: 60px 60px 15px;
+}
+
+/* Le bloc4-content est collé à droite (grâce à align-items: flex-end plus bas),
+   mais le texte interne est aligné à gauche */
+.bloc4-content {
+    text-align: left;            /* ✅ contenu aligné à gauche */
+    margin-bottom: 20px;
+    max-width: 430px;            /* largeur demandée */
+}
+
+/* Titres et paragraphe cohérents avec bloc3 */
+.bloc4-content h4 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 100%;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--color-dark);
+}
+.bloc4-content p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 100%;
+    color: grey;
+}
+
+/* === Footer collé === */
+footer {
+    margin-top: 0;            /* ✅ aucune marge avant le footer */
+    padding-top: 1rem;        /* tu peux ajuster selon ton design */
+    background-color: var(--color-white);
+    text-align: right;
+    height: 81px;             /* valeur précédemment demandée */
+    display: flex;
+    align-items: center;      /* ✅ centre verticalement le texte */
+    justify-content: flex-end;
+    font-family: var(--font-main), sans-serif;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+/* === Espacements latéraux pour Blocs 1, 3 et 4 === */
+.bloc1,
+.bloc3,
+.bloc4 {
+    padding-left: 5%;
+    padding-right: 5%;
+    box-sizing: border-box;
+}
+
+/* === Bloc 3 et Bloc 4 : Ajustement des images === */
+.bloc3-image img,
+.bloc4-image img {
+    width: 100%;         /* Prendre toute la largeur disponible */
+    height: auto;        /* Garder les proportions */
+    object-fit: cover;   /* Couvre l'espace sans déformation */
+    max-height: 100%;     /* S'assurer que l'image ne dépasse pas la hauteur du conteneur */
+}
+
+
+
+
 
 /* === Responsive === */
 @media (max-width: 992px) {
@@ -179,6 +282,65 @@
 
     .bloc3-content p {
         max-width: 100%;
+    }
+    /* === Bloc 4  === */
+    .bloc4 {
+        flex-direction: column;
+        max-height: none;
+    }
+    .bloc4-texte {
+        padding: 40px 60px;
+        align-items: center;     /* recentrer le conteneur sur mobile */
+    }
+    .bloc4-content {
+        margin-bottom: 20px;
+        max-width: 100%;
+        text-align: left;        /* reste à gauche sur mobile */
+    }
+    .bloc4-image {
+        height: 300px;
+        order: -1;               /* image repasse au-dessus sur mobile */
+    }
+}
+
+/* Variante : si tu veux exactement les mêmes espacements que .container Bootstrap */
+@media (min-width: 1200px) {
+    .bloc1,
+    .bloc3,
+    .bloc4 {
+        padding-left: 96px;
+        padding-right: 96px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .bloc1,
+    .bloc3,
+    .bloc4 {
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+}
+@media (max-width: 991.98px) {
+    .bloc1,
+    .bloc3,
+    .bloc4 {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+@media (max-width: 576px) {
+    .bloc1,
+    .bloc3,
+    .bloc4 {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+/* === Ajouter un contrôle pour les tailles en mode vertical tablette === */
+@media (max-width: 992px) and (min-width: 768px) {
+    .bloc3-image,
+    .bloc4-image {
+        height: 350px;      /* Hauteur fixée pour maintenir une proportion correcte */
     }
 }
 
