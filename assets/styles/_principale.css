@@ -2,96 +2,183 @@
 .bloc1 {
     display: flex;
     flex-wrap: wrap;
-    min-height: 90vh;
+    height: 75.1vh;              /* <-- au lieu de min-height */
     background-color: var(--color-light-bg);
-    align-items: stretch; /* égalise la hauteur des colonnes */
+    align-items: stretch;
+    margin-bottom: 30px;
 }
+
 
 /* Colonne texte */
 .bloc1-texte {
     background-color: var(--color-bloc1-bg);
     flex: 1 1 50%;
     display: flex;
-    justify-content: center;   /* centre verticalement */
-    align-items: center;       /* centre horizontalement */
-    padding: 0 120px;          /* <-- plus d’espace à gauche et à droite */
-    text-align: center;
+    align-items: center;      /* pour que l’enfant prenne 100% */
+    justify-content: center;
+    padding-left: 8%;        /* alignement plus fluide qu’un padding fixe */
+    padding-right: 4%;
+    text-align: left;
+    font-family: var(--font-main), sans-serif;
 }
-
+/* Contenu texte aligné en colonne gauche */
 .bloc1-content {
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* texte centré verticalement */
+    align-items: flex-start;
+    gap: 1.2rem;              /* espace régulier entre h1 et les paragraphes */
+    max-width: 500px;         /* largeur confortable du texte */
+    /*height: 100%;              /* occupe toute la colonne */
+    width: 100%;
 }
-
+/* Titre principal */
 .bloc1-texte h1 {
-    font-size: 4rem;           /* <-- nouvelle taille du titre */
-    color: var(--color-dark);
+    font-family: var(--font-main), sans-serif; /* <-- ajouté pour plus de sûreté */
     line-height: 1.1;
     margin-bottom: 2rem;
+    font-weight: 500;                  /* Medium */
+    font-style: normal;                /* correction : “Medium” est un poids, pas un style */
+    font-size: 64px;                   /* Taille du titre */
+    letter-spacing: 0;                 /* Pas d’espacement supplémentaire */
+    color: var(--color-dark);          /* Couleur conservée */
+    text-align: left;
 }
 
+/* Paragraphes */
 .bloc1-texte p {
+    font-family: var(--font-main), sans-serif; /* <-- ajouté */
     color: var(--color-text);
     font-size: var(--font-size-md);
     line-height: 1.6;
+    margin: 0;
+    max-width: 480px;        /* cohérence visuelle avec le h1 */
 }
 
-/* Colonne image */
 .bloc1-image {
     flex: 1 1 50%;
     background-color: var(--color-light-bg);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 100%;              /* occupe toute la hauteur du parent */
 }
 
 .bloc1-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* remplit sans déformer */
+}
+
+/* === Bloc 3 — Notre Conviction === */
+.bloc3 {
+    height: 64.6vh;
+    background-color: #EBE3D3;
+    overflow: hidden;
+}
+
+.bloc3-texte {
+    background-color: #EBE3D3; /* couleur douce en cohérence avec bloc1 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* texte aligné en bas */
+    padding: 60px 60px 15px;
+}
+
+.bloc3-content {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.bloc3-content h4 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 100%;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--color-dark);
+}
+
+.bloc3-content p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 100%;
+    color: grey;
+    max-width: 425px; /* ✅ contrainte demandée */
+}
+
+.bloc3-image {
+    background-color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bloc3-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
 /* === Responsive === */
-@media (max-width: 1200px) {
-    .bloc1-texte {
-        padding: 0 80px;
-    }
-
-    .bloc1-texte h1 {
-        font-size: 3.2rem;
-    }
-}
-
 @media (max-width: 992px) {
-    .bloc1-texte {
-        padding: 0 60px;
-    }
-
-    .bloc1-texte h1 {
-        font-size: 2.8rem;
-    }
-}
-
-@media (max-width: 768px) {
+    /* === Bloc 3  === */
     .bloc1 {
         flex-direction: column;
-        min-height: auto;
+        height: auto;
     }
 
     .bloc1-texte,
     .bloc1-image {
         flex: 1 1 100%;
-        padding: 2rem;
-        text-align: center;
         height: auto;
+        padding: 2rem 1.5rem;
+    }
+
+    .bloc1-content {
+        align-items: center;
+        text-align: center;
+        max-width: 100%;
+
     }
 
     .bloc1-texte h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
+        line-height: 1.1;
+    }
+    .bloc1-texte p {
+        font-size: 1rem;
     }
 
     .bloc1-image img {
         width: 90%;
         height: auto;
     }
+    /* === Bloc 3  === */
+    .bloc3 {
+        flex-direction: column;
+        max-height: none;
+    }
+
+    .bloc3-texte {
+        padding: 40px 60px;
+    }
+
+    .bloc3-content {
+        margin-bottom: 20px;
+    }
+
+    .bloc3-image {
+        height: 300px;
+    }
+
+    .bloc3-content p {
+        max-width: 100%;
+    }
 }
+

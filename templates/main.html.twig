@@ -24,14 +24,41 @@
         <a class="navbar-brand d-flex align-items-center" href="{{ path('app.principale') }}">
             <img src="{{ asset('img/static/logo.png') }}" alt="logo" class="me-2" style="height:32px;">
         </a>
+
+        {# --- Bouton burger pour mobile --- #}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
         {#  code lien : {{ path('produit_index') }}#}
         {#  TODO: penser à changer mettre en place les liens #}
-        <nav class="ms-auto d-flex gap-4">
-            <a class="nav-link" href="">Nos produits</a>
-            <a class="nav-link" href="#">Mon panier</a>
-            <a class="nav-link" href="#">Mon compte</a>
-            <a class="nav-link" href="#">Déconnexion</a>
-        </nav>
+        {# --- Menu principal --- #}
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <nav class="ms-auto navbar-nav d-flex align-items-center gap-lg-4">
+                <a class="nav-link" href="#">Nos produits</a>
+
+                {% if app.user %}
+                    <a class="nav-link" href="#">Mon panier</a>
+
+                    {# --- Menu déroulant Mon Compte --- #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ app.user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="#">Mon profil</a></li>
+                            <li><a class="dropdown-item" href="#">Mes commandes</a></li>
+                        </ul>
+                    </li>
+
+                    <a class="nav-link" href="#">Déconnexion</a>
+                {% else %}
+                    <a class="nav-link" href="#">Connexion</a>
+                {% endif %}
+            </nav>
+        </div>
     </div>
 </header>
 
@@ -52,7 +79,7 @@
 </main>
 
 {# === FOOTER === #}
-<footer class="text-end py-3 mt-auto border-top">
+<footer class="text-end mt-auto d-flex align-items-center">
     <div class="container">
         © GreenGoodies - {{ "now"|date("Y") }}
     </div>

@@ -15,7 +15,7 @@
                         Découvrez notre univers de produits durables et éthiques pour une consommation responsable.
                     </p>
                     <p>
-                        Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter.
+                        Retrouvez des articles d’hygiène et beauté, des accessoires et boissons et du prêt à porter.
                     </p>
                 </div>
             </div>
@@ -24,7 +24,27 @@
                 <img src="{{ asset('img/static/bienvenue.png') }}" alt="Bienvenue" class="img-fluid">
             </div>
         </section>
+        {# === Bloc 2 — Produits === #}
+        {% include 'pages/briques/_produitcards.html.twig' with { produits: produits } %}
+        {# === Bloc 3 — Notre Conviction === #}
+        <section class="bloc3 container-fluid d-flex flex-column flex-md-row align-items-stretch p-0">
+            {# Bloc texte #}
+            <div class="bloc3-texte col-12 col-md-7 d-flex flex-column justify-content-end">
+                <div class="bloc3-content text-start">
+                    <h4>NOTRE CONVICTION</h4>
+                    <p>
+                        Chez GreenGoodies, nous croyons en un monde avec un commerce peut être synonyme de bien-être
+                        pour la planète et ses habitants. Notre mission est de vous proposer une sélection rigoureuse
+                        de produits qui allient qualité, durabilité et éthique.
+                    </p>
+                </div>
+            </div>
 
-
+            {# Bloc image #}
+            <div class="bloc3-image col-12 col-md-5 d-flex align-items-center justify-content-center">
+                <img src="{{ asset('img/static/fleurs.png') }}" alt="Fleurs" class="img-fluid">
+            </div>
+        </section>
     </main>
 {% endblock %}
+

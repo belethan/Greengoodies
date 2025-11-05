@@ -1,0 +1,32 @@
+{# templates/_partials/_produits.html.twig #}
+
+<section class="bloc2 container py-1">
+    <h4 class="text-left mb-5">NOS PRODUITS</h4>
+
+    <div class="row g-4">
+        {% for produit in produits %}
+            <div class="col-12 col-sm-6 col-md-4 d-flex">
+                <div class="product-card flex-fill text-center d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="product-image">
+                            <img src="{{ asset('img/produits/' ~ produit.imageProduit) }}"
+                                 alt="{{ produit.nom }}" class="img-fluid w-100">
+                        </div>
+                        <h3 class="fw-semibold mb-2">{{ produit.titre }}</h3>
+                        <p class="text-muted small mb-2">{{ produit.soustitre }}</p>
+                        <p class="fw-bold mb-3">{{ produit.prix|number_format(2, ',', ' ') }} €</p>
+                    </div>
+                    <div>
+                        {# {{ path('produit_show', { id: produit.id }) }} #}
+                        {#  TODO: penser à changer mettre accès à la fiche produit #}
+                        <a href="#" class="product-link mt-auto">
+                            Voir le produit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Aucun produit disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</section>

@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 :root {
     /* === Couleurs principales === */
     --color-primary: #4f6b57;
     --color-secondary: #6f7e70;
-    --color-light-bg: #FFFDF7; /* ancienne #FEFCF7 */
+    --color-light-bg: #fffdf7; /* ancienne #FEFCF7 */
     --color-dark: #222222;
     --color-text: #444444;
     --color-border: #dcdcdc;

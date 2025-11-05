@@ -1,0 +1,120 @@
+/* ================================
+   Bloc 2 — Section Produits
+   ================================ */
+
+.bloc2 {
+    background-color: #FFFDF7;
+}
+
+/* ================================
+   Colonne produit
+   ================================ */
+.col-12.col-sm-6.col-md-4.d-flex {
+    padding: 0;                /* ✅ supprime tout espace latéral */
+    margin: 0;                 /* ✅ pas de marge horizontale */
+}
+
+/* ================================
+   Carte produit
+   ================================ */
+.product-card {
+    background-color: var(--color-light-bg); /* ✅ fond via variable */
+    border: none;                            /* ✅ aucune bordure */
+    border-radius: 0;                        /* ✅ angles droits */
+    box-shadow: none;                        /* ✅ pas d’ombre */
+    padding: 0;                              /* ✅ pas de padding interne */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ================================
+   Titre du bloc 2 (H4)
+   ================================ */
+.bloc2 h4 {
+    margin-left: 80px;          /* ✅ décalage à gauche */
+    font-size: 18px;            /* ✅ taille précise */
+    font-weight: 100;           /* ✅ finesse de la police */
+    font-family: var(--font-main), sans-serif; /* cohérence visuelle */
+    color: var(--color-dark, #111);
+    text-transform: uppercase;  /* optionnel : même style que maquette */
+}
+
+/* ================================
+   Image produit
+   ================================ */
+.product-card .product-image {
+    width: 100%;
+    height: 474px;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.product-card .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ================================
+   Texte produit
+   ================================ */
+.product-card h3 {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    margin: 1rem 0 0.5rem 0;
+}
+
+.product-card p.text-muted {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.3rem;
+}
+
+.product-card .fw-bold {
+    font-size: 1rem;
+    color: var(--color-dark);
+    margin-bottom: 1rem;
+}
+
+/* ================================
+   Lien "Voir le produit"
+   ================================ */
+.product-card .product-link {
+    display: block;
+    text-decoration: none;
+    color: var(--color-dark);
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 20px; /* ✅ marge bas */
+    transition: color 0.3s ease;
+}
+
+.product-card .product-link:hover {
+    color: var(--color-primary, #4B6043);
+    text-decoration: underline;
+}
+
+/* ================================
+   Responsive
+   ================================ */
+@media (max-width: 768px) {
+    .product-card .product-image {
+        height: 320px;
+    }
+}
+
+@media (max-width: 576px) {
+    .product-card .product-image {
+        height: 260px;
+    }
+}

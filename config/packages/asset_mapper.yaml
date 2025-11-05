@@ -1,9 +1,12 @@
 framework:
     asset_mapper:
-        # The paths to make available to the asset mapper.
+        public_prefix: 'assets/'
+        importmap_polyfill: false
+        # Dossier scanné pour les fichiers gérés par AssetMapper (JS/CSS)
         paths:
             - assets/
-        missing_import_mode: strict
+                # Extensions gérées (inclure images et styles)
+        extensions: [ 'js', 'css', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp' ]
 
 when@prod:
     framework:
