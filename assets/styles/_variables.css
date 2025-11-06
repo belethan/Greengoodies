@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
 :root {
     /* === Couleurs principales === */
     --color-primary: #4f6b57;
@@ -11,6 +12,13 @@
 
     /* === Nouvelle couleur pour bloc texte === */
     --color-bloc1-bg: #E8F0E3;
+
+    /* === Couleurs spécifiques Login === */
+    --login-btn-bg: #565656;          /* Couleur principale du bouton */
+    --login-btn-hover-bg: #CCCCCC;    /* Couleur de survol du bouton */
+    --login-input-focus-border: #666666; /* Couleur bordure input au focus */
+    --login-link-color: #666666;      /* Couleur du lien sous formulaire */
+    --login-link-hover: #000000;      /* Couleur du lien au survol */
 
     /* === Typographie === */
     --font-main: 'Inter', sans-serif;

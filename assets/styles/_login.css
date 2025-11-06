@@ -1,0 +1,190 @@
+/* ==========================
+   LOGIN PAGE
+   ========================== */
+
+/* Conteneur principal (même largeur que le header) */
+.login-container {
+    max-height: 995px;
+    height: auto;
+    background-color: var(--color-light-bg);
+    padding-bottom: 30px; /* ✅ espace fixe avant le footer */
+    padding-left: 0 !important;  /* ✅ aligné avec le container du header */
+    padding-right: 0 !important;
+}
+
+/* Ligne principale */
+.login-container .row {
+    height: 100%;
+    margin-top: 0;
+}
+
+/* Colonnes gauche / droite */
+.col-md-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 995px;
+}
+
+/* === Image gauche === */
+.image-container {
+    background-color: var(--color-light-bg);
+}
+
+.image-container img,
+.login-image {
+    width: 100%;
+    max-width: 735px;          /* ✅ largeur max conforme à la maquette */
+    max-height: 995px;         /* ✅ hauteur max */
+    height: auto;
+    object-fit: cover;         /* ✅ remplit la zone sans déformation */
+    object-position: top center; /* ✅ collée en haut */
+    padding-left: 5px;
+    align-self: flex-start;    /* ✅ aligne l’image en haut du flex parent */
+}
+
+/* === Card du formulaire === */
+.card {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--color-light-bg);
+    border: none;
+    box-shadow: none;
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+/* === Titre === */
+.card h4 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0;
+}
+
+/* === Labels === */
+.form-group label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #666666;
+}
+
+/* === Champs du formulaire === */
+.form-control {
+    width: 100%;              /* ✅ fluide */
+    max-width: 479px;         /* ✅ limite desktop */
+    height: 67px;
+    border-width: 1px;
+    border-color: #ccc;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    background-color: var(--color-light-bg);
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: var(--login-input-focus-border);
+    box-shadow: 0 0 5px rgba(102, 102, 102, 0.5);
+}
+
+/* === Gestion des erreurs === */
+.is-invalid {
+    border-color: #dc3545;
+}
+.invalid-feedback {
+    color: #dc3545;
+}
+
+/* === Bouton === */
+.btn-primary {
+    background-color: var(--login-btn-bg);
+    border-color: var(--login-btn-bg);
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    width: 100%;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--login-btn-hover-bg);
+    border-color: var(--login-btn-hover-bg);
+    color: #000;
+}
+
+/* === Lien sous le bouton === */
+.mt-3 {
+    text-align: center;
+}
+
+.mt-3 a {
+    color: var(--login-link-color);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 100%;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0;
+}
+
+.mt-3 a:hover {
+    color: var(--login-link-hover);
+    text-decoration: underline;
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+    .login-container {
+        max-height: none;
+        height: auto;
+        margin-top: 10px;
+        padding-bottom: 30px;
+        padding-left: 12px !important;  /* ✅ marges Bootstrap sur mobile */
+        padding-right: 12px !important;
+    }
+
+    .col-md-6 {
+        width: 100%;
+        height: auto;
+        max-height: none;
+    }
+
+    .login-image {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        object-fit: contain;
+        padding-left: 0;
+    }
+
+    .card {
+        margin: 20px auto;
+        max-width: 90%;
+        padding: 1.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        max-width: 100%;
+        height: 55px;
+    }
+}
+
+/* === Footer spacing === */
+footer {
+    margin-top: 30px; /* ✅ espace exact sous le contenu */
+}

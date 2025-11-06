@@ -55,23 +55,30 @@
 
                     <a class="nav-link" href="#">Déconnexion</a>
                 {% else %}
-                    <a class="nav-link" href="#">Connexion</a>
+                    <a class="nav-link" href="/login">Connexion</a>
                 {% endif %}
             </nav>
         </div>
     </div>
 </header>
 
-{# === MESSAGES FLASH === #}
-<div class="container mt-3">
+{# === MESSAGES FLASH GLOBAUX (ET ERREUR LOGIN) === #}
+<div class="container px-0">
+    {% if error is defined and error %}
+        <div class="alert alert-danger text-center py-3 mb-5 w-100 shadow-sm" role="alert">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="alert alert-{{ label }} shadow-sm fade show" role="alert">
+            <div class="alert alert-{{ label }} text-center py-3 mb-5 w-100 shadow-sm" role="alert">
                 {{ message }}
             </div>
         {% endfor %}
     {% endfor %}
 </div>
+
 
 {# === CONTENU PRINCIPAL === #}
 <main class="flex-grow-1 p-0 m-0">

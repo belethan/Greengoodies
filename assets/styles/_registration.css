@@ -1,0 +1,41 @@
+/* ==========================
+   REGISTRATION PAGE
+   ========================== */
+
+@import './_login.css';
+
+/* === Couleur du focus sur les champs === */
+.login-container .form-control:focus {
+    border-color: #444444 !important;  /* gris foncé */
+    box-shadow: 0 0 5px rgba(68, 68, 68, 0.5) !important;
+}
+
+/* === Couleur du bouton === */
+.login-container .btn-primary {
+    background-color: #444444 !important;
+    border-color: #444444 !important;
+    color: #ffffff !important;
+}
+
+.login-container .btn-primary:hover,
+.login-container .btn-primary:active,
+.login-container .btn-primary:focus {
+    background-color: #5c5c5c !important;
+    border-color: #5c5c5c !important;
+    color: #ffffff !important;
+}
+
+/* === Messages d'erreur (couleur orange uniforme) === */
+.login-container .form-error-message,
+.login-container .invalid-feedback,
+.login-container ul.form-errors,
+.login-container span.form-error-message,
+.login-container li {
+    color: #ff8800 !important;   /* orange vif */
+    font-weight: 500;
+    list-style: none;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+
+
