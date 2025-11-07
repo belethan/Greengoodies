@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LignePanierRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LignePanierRepository::class)]
@@ -14,10 +15,10 @@ class LignePanier
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt ;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $modifiedAt = null;
+    private ?DateTimeImmutable $modifiedAt = null;
 
     #[ORM\Column]
     private ?int $quantite = null;
@@ -34,7 +35,7 @@ class LignePanier
     public function __construct()
     {
         // ✅ Initialise automatiquement la date de création à "maintenant"
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -42,24 +43,24 @@ class LignePanier
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getModifiedAt(): ?\DateTimeImmutable
+    public function getModifiedAt(): ?DateTimeImmutable
     {
         return $this->modifiedAt;
     }
 
-    public function setModifiedAt(?\DateTimeImmutable $modifiedAt): static
+    public function setModifiedAt(?DateTimeImmutable $modifiedAt): static
     {
         $this->modifiedAt = $modifiedAt;
 

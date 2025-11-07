@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,10 +32,10 @@ class Produit
     private ?string $prix = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private ?\DateTimeImmutable $modifiedAt = null;
+    private ?DateTimeImmutable $modifiedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageProduit = null;
@@ -42,20 +43,20 @@ class Produit
     public function __construct()
     {
         // Option 1 (recommandée) : sécurité supplémentaire si jamais PrePersist ne s’exécute pas
-        $this->createdAt = $this->createdAt ?? new \DateTimeImmutable();
+        $this->createdAt = $this->createdAt ?? new DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
     public function onPreUpdate(): void
     {
-        $this->modifiedAt = new \DateTimeImmutable();
+        $this->modifiedAt = new DateTimeImmutable();
     }
 
     #[ORM\PrePersist]
     public function onPrePersist(): void
     {
         if ($this->createdAt === null) {
-            $this->createdAt = new \DateTimeImmutable();
+            $this->createdAt = new DateTimeImmutable();
         }
     }
 
@@ -124,24 +125,24 @@ class Produit
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getModifiedAt(): ?\DateTimeImmutable
+    public function getModifiedAt(): ?DateTimeImmutable
     {
         return $this->modifiedAt;
     }
 
-    public function setModifiedAt(?\DateTimeImmutable $modifiedAt): static
+    public function setModifiedAt(?DateTimeImmutable $modifiedAt): static
     {
         $this->modifiedAt = $modifiedAt;
 

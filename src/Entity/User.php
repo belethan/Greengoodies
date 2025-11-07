@@ -32,10 +32,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Panier::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $paniers;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commande::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $commandes;
 
     public function __construct()
