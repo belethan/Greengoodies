@@ -1,0 +1,35 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}{{ produit.nom }} - Fiche Produit{% endblock %}
+
+{% block body %}
+    <section class="fiche-produit container my-5">
+        <div class="row">
+            <!-- Colonne gauche : image -->
+            <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                <img src="{{ asset('img/produits/' ~ produit.imageProduit) }}"
+                     alt="{{ produit.nom }}"
+                     class="photo-produit img-fluid">
+            </div>
+
+            <!-- Colonne droite : détails -->
+            <div class="col-12 col-md-6 produit-details d-flex flex-column justify-content-center">
+                <h1 class="produit-titre">{{ produit.nom }}</h1>
+
+                <p class="produit-prix">
+                    {{ produit.prix|number_format(2, ',', ' ') }} €
+                </p>
+
+                <p class="produit-libelle">Description</p>
+
+                <p class="produit-description">
+                    {{ produit.description }}
+                </p>
+
+
+                <a href="#" class="btn btn-ajout-panier px-4 py-2">Ajouter au panier</a>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}

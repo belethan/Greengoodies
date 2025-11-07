@@ -31,12 +31,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        {#  code lien : {{ path('produit_index') }}#}
-        {#  TODO: penser à changer mettre en place les liens #}
         {# --- Menu principal --- #}
         <div class="collapse navbar-collapse" id="navbarNav">
             <nav class="ms-auto navbar-nav d-flex align-items-center gap-lg-4">
-                <a class="nav-link" href="#">Nos produits</a>
+                <a class="nav-link" href="{{ path('app.principale') }}">Nos produits</a>
 
                 {% if app.user %}
                     <a class="nav-link" href="#">Mon panier</a>
@@ -48,14 +46,15 @@
                             {{ app.user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                            <li><a class="dropdown-item" href="#">Mon profil</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app.profile') }}">Mon profil</a></li>
+                            {#  TODO: penser à changer mettre en place les liens commandes#}
                             <li><a class="dropdown-item" href="#">Mes commandes</a></li>
                         </ul>
                     </li>
 
-                    <a class="nav-link" href="#">Déconnexion</a>
+                    <a class="nav-link" href="{{ path('app.logout') }}">Déconnexion</a>
                 {% else %}
-                    <a class="nav-link" href="/login">Connexion</a>
+                    <a class="nav-link" href="{{ path('app.login') }}">Connexion</a>
                 {% endif %}
             </nav>
         </div>

@@ -118,7 +118,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         if ($this->prenom && $this->nom) {
-            return strtolower($this->prenom . '.' . $this->nom);
+            return strtolower($this->prenom . ' ' . $this->nom);
         }
         return (string) $this->email;
     }

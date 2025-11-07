@@ -1,0 +1,122 @@
+/* === Fiche produit === */
+.fiche-produit {
+    display: flex;
+    align-items: flex-start; /* contenu aligné en haut */
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.photo-produit {
+    height: 664px;
+    max-width: 735px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* === Colonne de droite === */
+.produit-details {
+    padding: 40px;
+    text-align: left;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+/* === Titre du produit === */
+.produit-titre {
+    padding-top: 50px;
+    padding-left: 35px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+/* === Prix === */
+.produit-prix {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333333;
+    margin: 25px 0 25px 35px; /* alignement horizontal */
+}
+
+/* === Libellé === */
+.produit-libelle {
+    font-size: 12px;
+    color: #444;
+    margin: 10px 0 10px 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* === Description === */
+.produit-description {
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.6;
+    max-width: 500px;
+    margin-left: 35px;
+}
+
+/* === Bouton Ajouter au panier (plein largeur) === */
+.btn-ajout-panier {
+    background-color: #444444 !important;
+    border-color: #444444 !important;
+    font-size: 14px;
+    height: 77px;
+    display: flex;                 /*centre verticalement et horizontalement */
+    align-items: center;           /* centre verticalement */
+    justify-content: center;       /* centre horizontalement */
+    color: #ffffff !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: 35px;
+    margin-top: 25px;
+    width: calc(100% - 70px); /* prend toute la largeur du bloc, en respectant le padding gauche */
+    text-align: center;
+}
+
+.btn-ajout-panier:hover {
+    background-color: #333333 !important;
+    border-color: #333333 !important;
+    transform: scale(1.02);
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+    .fiche-produit {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .produit-details {
+        padding: 20px;
+        text-align: center;
+        align-items: center !important;
+    }
+
+    .produit-titre,
+    .produit-prix,
+    .produit-libelle,
+    .produit-description,
+    .btn-ajout-panier {
+        margin-left: 0;
+        padding-left: 0;
+        width: 100%; /* plein écran sur mobile */
+    }
+
+    .btn-ajout-panier {
+        align-self: center;
+    }
+
+    .photo-produit {
+        height: auto;
+        width: 100%;
+        max-width: 600px;
+    }
+}

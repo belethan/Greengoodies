@@ -19,7 +19,7 @@
                     <div>
                         {# {{ path('produit_show', { id: produit.id }) }} #}
                         {#  TODO: penser à changer mettre accès à la fiche produit #}
-                        <a href="#" class="product-link mt-auto">
+                        <a href="{{ path('app.produit', { id: produit.id }) }}" class="product-link mt-auto">
                             Voir le produit
                         </a>
                     </div>
