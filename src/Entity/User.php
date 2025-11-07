@@ -42,6 +42,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->paniers = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        // On initialise le rôle par défaut à ROLE_USER
+        $this->roles = ['ROLE_USER'];
     }
 
     // === GETTERS / SETTERS DE BASE ===

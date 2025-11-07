@@ -1,0 +1,57 @@
+{% extends 'main.html.twig' %}
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Mon panier</h2>
+
+        <div class="mb-3 text-start">
+            <a href="{{ path('app.panier.vider') }}" class="text-muted text-decoration-none">x Vider le panier</a>
+        </div>
+
+        {% if lignesPanier is empty %}
+            <div class="text-center py-5">
+                <p>Votre panier est vide.</p>
+            </div>
+        {% else %}
+            <div class="bg-light p-4 rounded-3">
+                {% for ligne in lignesPanier %}
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3">
+                            {# si tu stockes juste le nom de fichier image #}
+                            <img
+                                src="{% if ligne.produit.image starts with 'http' %}{{ ligne.produit.image }}{% else %}{{ asset('img/produits/' ~ ligne.produit.image) }}{% endif %}"
+                                alt="{{ ligne.produit.nom }}"
+                                class="img-fluid rounded shadow-sm">
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-semibold mb-1">{{ ligne.produit.nom }}</h6>
+                            <div class="text-muted">Quantité : {{ ligne.quantite }}</div>
+                            <div class="mt-2 fw-bold">{{ ligne.produit.prix|number_format(2, ',', ' ') }} €</div>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <a class="btn btn-outline-secondary btn-sm"
+                               href="{{ path('app.panier.supprimer_ligne', {id: ligne.id}) }}">
+                                Retirer
+                            </a>
+                        </div>
+                    </div>
+                    {% if not loop.last %}<hr class="my-3">{% endif %}
+                {% endfor %}
+
+                <div class="d-flex justify-content-end pt-3">
+                    <div class="text-end">
+                        <p class="mb-1"><strong>Total panier :</strong> {{ total|number_format(2, ',', ' ') }}€</p>
+                        <p class="text-muted small">Frais de livraison : Offert</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app.panier.valider') }}" class="btn btn-dark w-50 py-3" style="height:77px;">
+                    Valider la commande
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
