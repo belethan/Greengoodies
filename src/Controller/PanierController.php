@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\LignePanier;
 use App\Entity\Panier;
-use App\Repository\ProduitRepository;
+use App\Enum\StatutCommande;
 use App\Repository\PanierRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,22 +18,22 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PanierController extends AbstractController
 {
     /**
-     * Permet de visualiser le panier en cours
+     * 🛒 Affiche le panier de l’utilisateur connecté
      */
-    #[Route('/visualiser', name: 'visualiser', methods: ['GET'])]
+    #[Route('/', name: 'visualiser', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
-    public function visualiser(PanierRepository $panierRepository): Response
+    public function index(PanierRepository $panierRepository): Response
     {
         $user = $this->getUser();
         if (!$user) {
-            $this->addFlash('warning', 'Veuillez vous connecter avant de pouvoir consulter le panier.');
+            $this->addFlash('warning', 'Veuillez vous connecter avant de pouvoir consulter votre panier.');
             return $this->redirectToRoute('app.login');
         }
-        $panier = method_exists($user, 'getPanier')
-            ? $user->getPanier()
-            : $panierRepository->findOneBy(['user' => $user]);
 
-        // Si aucun panier ou panier vide → redirection vers app.principale
+        // Récupération du panier actif (modePanier = 0)
+        $panier = $panierRepository->findPanierActifByUser($user);
+
+        // Si aucun panier ou panier vide
         if (!$panier || $panier->getLignePaniers()->isEmpty()) {
             $this->addFlash('warning', 'Votre panier est vide.');
             return $this->redirectToRoute('app.principale');
@@ -41,10 +42,12 @@ class PanierController extends AbstractController
         // Calcul du total
         $total = 0;
         foreach ($panier->getLignePaniers() as $ligne) {
-            $total += $ligne->getProduit()->getPrix() * $ligne->getQuantite();
+            $produit = $ligne->getProduit();
+            if ($produit) {
+                $total += $produit->getPrix() * $ligne->getQuantite();
+            }
         }
 
-        // Affichage du même template que index()
         return $this->render('pages/panier.html.twig', [
             'panier' => $panier,
             'lignesPanier' => $panier->getLignePaniers(),
@@ -53,9 +56,10 @@ class PanierController extends AbstractController
     }
 
     /**
-     * Ajoute 1 exemplaire d’un produit au panier depuis sa fiche.
+     * ➕ Ajoute un produit au panier (ou incrémente la quantité)
      */
-    #[Route('/ajouter/{id}', name: 'ajouter', methods: ['POST','GET'])]
+    #[Route('/ajouter/{id}', name: 'ajouter', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function ajouter(
         int $id,
         ProduitRepository $produitRepository,
@@ -63,10 +67,6 @@ class PanierController extends AbstractController
         EntityManagerInterface $em
     ): RedirectResponse {
         $user = $this->getUser();
-        if (!$user) {
-            $this->addFlash('warning', 'Veuillez vous connecter avant d’ajouter ce produit au panier.');
-            return $this->redirectToRoute('app.login');
-        }
 
         $produit = $produitRepository->find($id);
         if (!$produit) {
@@ -74,22 +74,20 @@ class PanierController extends AbstractController
             return $this->redirectToRoute('app.principale');
         }
 
-        // Récupère ou crée le panier du user
-        $panier = method_exists($user, 'getPanier') ? $user->getPanier() : $panierRepository->findOneBy(['user' => $user]);
+        // Récupère le panier actif ou en crée un
+        $panier = $panierRepository->findPanierActifByUser($user);
         if (!$panier) {
             $panier = new Panier();
-            // si ton entité Panier possède un setUser()
-            if (method_exists($panier, 'setUser')) {
-                $panier->setUser($user);
-            }
+            $panier->setUser($user);
+            $panier->setModePanier(false); // panier actif
             $em->persist($panier);
         }
 
-        // Cherche une ligne existante pour ce produit
+        // Vérifie si le produit existe déjà dans le panier
         $ligneExistante = null;
-        foreach ($panier->getLignePaniers() as $l) {
-            if ($l->getProduit()->getId() === $produit->getId()) {
-                $ligneExistante = $l;
+        foreach ($panier->getLignePaniers() as $ligne) {
+            if ($ligne->getProduit()->getId() === $produit->getId()) {
+                $ligneExistante = $ligne;
                 break;
             }
         }
@@ -100,66 +98,68 @@ class PanierController extends AbstractController
             $ligne = new LignePanier();
             $ligne->setProduit($produit);
             $ligne->setQuantite(1);
-            // si ton entité LignePanier possède setPanier()
-            if (method_exists($ligne, 'setPanier')) {
-                $ligne->setPanier($panier);
-            }
-            // si Panier gère l’ajout côté inverse (addLignePanier / addLigne)
-            if (method_exists($panier, 'addLignePanier')) {
-                $panier->addLignePanier($ligne);
-            } elseif (method_exists($panier, 'addLigne')) {
-                $panier->addLigne($ligne);
-            }
+            $ligne->setPanier($panier);
             $em->persist($ligne);
         }
 
         $em->flush();
 
-        $this->addFlash('success', 'Produit ajouté au panier !');
-        // on renvoie vers la fiche produit si tu as une route app.produit
+        $this->addFlash('success', 'Le produit a été ajouté à votre panier.');
         return $this->redirectToRoute('app.principale');
     }
 
     /**
-     * Supprime une ligne précise du panier.
+     * ➖ Supprime une ligne précise du panier
      */
-    #[Route('/ligne/{id}/supprimer', name: 'supprimer_ligne', methods: ['POST','GET'])]
+    #[Route('/supprimer-ligne/{id}', name: 'supprimer_ligne', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function supprimerLigne(int $id, EntityManagerInterface $em): RedirectResponse
-    {
-        $repo = $em->getRepository(LignePanier::class);
-        $ligne = $repo->find($id);
+    public function supprimerLigne(
+        int $id,
+        EntityManagerInterface $em,
+        PanierRepository $panierRepository
+    ): RedirectResponse {
+        $user = $this->getUser();
+        $panier = $panierRepository->findPanierActifByUser($user);
 
-        if (!$ligne) {
-            $this->addFlash('warning', 'Ligne introuvable.');
-            return $this->redirectToRoute('app.panier.visualiser');
+        if (!$panier) {
+            $this->addFlash('warning', 'Aucun panier actif trouvé.');
+            return $this->redirectToRoute('app.principale');
+        }
+
+        $ligne = $em->getRepository(LignePanier::class)->find($id);
+        if (!$ligne || $ligne->getPanier() !== $panier) {
+            $this->addFlash('warning', 'Article introuvable dans votre panier.');
+            return $this->redirectToRoute('app.principale');
         }
 
         $em->remove($ligne);
         $em->flush();
 
-        $this->addFlash('success', 'Article retiré du panier.');
-        return $this->redirectToRoute('app.panier.visualiser');
+        $this->addFlash('success', 'L’article a été supprimé du panier.');
+        return $this->redirectToRoute('app.principale');
     }
 
     /**
-     * Vide entièrement le panier de l’utilisateur.
+     * 🗑️ Vide complètement le panier actif
      */
-    #[Route('/vider', name: 'vider', methods: ['POST','GET'])]
+    #[Route('/vider', name: 'vider', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function vider(EntityManagerInterface $em, PanierRepository $panierRepository): RedirectResponse
-    {
+    public function vider(
+        EntityManagerInterface $em,
+        PanierRepository $panierRepository
+    ): RedirectResponse {
         $user = $this->getUser();
-        $panier = method_exists($user, 'getPanier') ? $user->getPanier() : $panierRepository->findOneBy(['user' => $user]);
+        $panier = $panierRepository->findPanierActifByUser($user);
 
         if (!$panier) {
-            $this->addFlash('warning', 'Aucun panier à vider.');
+            $this->addFlash('warning', 'Aucun panier actif à vider.');
             return $this->redirectToRoute('app.principale');
         }
 
         foreach ($panier->getLignePaniers() as $ligne) {
             $em->remove($ligne);
         }
+
         $em->flush();
 
         $this->addFlash('success', 'Votre panier a été vidé.');
@@ -167,14 +167,29 @@ class PanierController extends AbstractController
     }
 
     /**
-     * Démarre la validation (redirige vers ton flux de commande).
+     *  Valide le panier et le transforme en commande (modePanier = 1)
      */
-    #[Route('/valider', name: 'valider', methods: ['POST','GET'])]
+    #[Route('/valider', name: 'valider', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    public function valider(): RedirectResponse
-    {
-        // Ici tu démarreras la création de Commande (Panier -> Commande)
-        $this->addFlash('success', 'Commande validée avec succès !');
-        return $this->redirectToRoute('app.principale'); // adapte s’il le faut
+    public function valider(
+        EntityManagerInterface $em,
+        PanierRepository $panierRepository
+    ): RedirectResponse {
+        $user = $this->getUser();
+        $panier = $panierRepository->findPanierActifByUser($user);
+
+        if (!$panier || $panier->getLignePaniers()->isEmpty()) {
+            $this->addFlash('warning', 'Votre panier est vide, impossible de valider la commande.');
+            return $this->redirectToRoute('app.principale');
+        }
+
+        $panier->setModePanier(true); // devient une commande
+        $panier->setDateCmde(new \DateTimeImmutable());
+        $panier->setStatutCmde(StatutCommande::EN_CONCEPTION);
+
+        $em->flush();
+
+        $this->addFlash('success', 'Votre commande a été validée avec succès.');
+        return $this->redirectToRoute('app.commandes');
     }
 }

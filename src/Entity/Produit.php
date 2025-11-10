@@ -137,11 +137,18 @@ class Produit
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getModifiedAt(): ?DateTimeImmutable
     {
         return $this->modifiedAt;
     }
 
+    /**
+     * @param DateTimeImmutable|null $modifiedAt
+     * @return $this
+     */
     public function setModifiedAt(?DateTimeImmutable $modifiedAt): static
     {
         $this->modifiedAt = $modifiedAt;
@@ -149,6 +156,9 @@ class Produit
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getImageProduit(): ?string
     {
         return $this->imageProduit;

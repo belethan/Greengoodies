@@ -37,7 +37,7 @@
                 <a class="nav-link" href="{{ path('app.principale') }}">Nos produits</a>
 
                 {% if app.user %}
-                    <a class="nav-link" href="#">Mon panier</a>
+                    <a class="nav-link" href="{{ path('app.panier.visualiser') }}">Mon panier</a>
 
                     {# --- Menu déroulant Mon Compte --- #}
                     <li class="nav-item dropdown">
@@ -80,7 +80,7 @@
 
 
 {# === CONTENU PRINCIPAL === #}
-<main class="flex-grow-1 p-0 m-0">
+<main class="flex-grow-1 p-0 m-0 {% block main_class %}main-default{% endblock %}">
     {% block body %}{% endblock %}
 </main>
 
@@ -96,6 +96,8 @@
 
 {# --- Import de ton JS Symfony (app.js → global.js inclus) --- #}
 {{ importmap('app') }}
+
+{% include 'pages/briques/_confirmaction.html.twig'%}
 
 {% block javascripts %}{% endblock %}
 </body>

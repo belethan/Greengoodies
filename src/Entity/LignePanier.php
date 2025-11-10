@@ -27,14 +27,14 @@ class LignePanier
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'lignePaniers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Panier $panier = null;
 
 
     public function __construct()
     {
-        // ✅ Initialise automatiquement la date de création à "maintenant"
+        // Initialise automatiquement la date de création à "maintenant"
         $this->createdAt = new DateTimeImmutable();
     }
 

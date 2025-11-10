@@ -29,6 +29,14 @@ footer {
     font-size: var(--font-size-sm);
 }
 
+.main-default {
+    background-color: #f7f1eb; /* fond classique */
+}
+
+.main-panier {
+    background-color: #fdf9f3; /* fond spécifique pour la page panier */
+}
+
 /* Messages Flash Bootstrap */
 .alert {
     position: fixed;

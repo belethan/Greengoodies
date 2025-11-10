@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Panier;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,25 @@ class PanierRepository extends ServiceEntityRepository
         parent::__construct($registry, Panier::class);
     }
 
-    //    /**
-    //     * @return Panier[] Returns an array of Panier objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findPanierActifByUser(User $user): ?Panier
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->andWhere('p.modePanier = 0')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Panier
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findCommandesByUser(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->andWhere('p.modePanier = 1')
+            ->orderBy('p.dateCmde', 'DESC')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

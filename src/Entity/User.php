@@ -35,13 +35,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $paniers;
 
-    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private Collection $commandes;
-
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
         // On initialise le rôle par défaut à ROLE_USER
         $this->roles = ['ROLE_USER'];
     }
@@ -158,31 +154,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // === RELATIONS COMMANDE ===
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUser($this);
-        }
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            if ($commande->getUser() === $this) {
-                $commande->setUser(null);
-            }
-        }
-        return $this;
-    }
 }
