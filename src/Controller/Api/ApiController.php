@@ -35,7 +35,7 @@ class ApiController extends AbstractController
 
         try {
             $user = $userProvider->loadUserByIdentifier($username);
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return new JsonResponse(['error' => 'Utilisateur introuvable.'], 401);
         }
 

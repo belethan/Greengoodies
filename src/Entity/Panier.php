@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PanierRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -19,18 +20,18 @@ class Panier
     private bool $modePanier = false;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeImmutable $dateCmde = null;
+    private ?DateTimeImmutable $dateCmde = null;
 
-    #[ORM\Column(enumType: StatutCommande::class, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: StatutCommande::class)]
     private ?StatutCommande $statutCmde = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $modifiedAt = null;
+    private ?DateTimeImmutable $modifiedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'panier', targetEntity: LignePanier::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: LignePanier::class, mappedBy: 'panier', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $lignePaniers;
 
     #[ORM\ManyToOne(inversedBy: 'paniers')]
@@ -42,7 +43,7 @@ class Panier
     {
         $this->lignePaniers = new ArrayCollection();
         // Initialise automatiquement la date de création à "maintenant"
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -63,12 +64,12 @@ class Panier
     }
 
     //  dateCmde
-    public function getDateCmde(): ?\DateTimeImmutable
+    public function getDateCmde(): ?DateTimeImmutable
     {
         return $this->dateCmde;
     }
 
-    public function setDateCmde(?\DateTimeImmutable $dateCmde): self
+    public function setDateCmde(?DateTimeImmutable $dateCmde): self
     {
         $this->dateCmde = $dateCmde;
         return $this;
@@ -87,24 +88,24 @@ class Panier
     }
 
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getModifiedAt(): ?\DateTimeImmutable
+    public function getModifiedAt(): ?DateTimeImmutable
     {
         return $this->modifiedAt;
     }
 
-    public function setModifiedAt(?\DateTimeImmutable $modifiedAt): static
+    public function setModifiedAt(?DateTimeImmutable $modifiedAt): static
     {
         $this->modifiedAt = $modifiedAt;
 

@@ -3,11 +3,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Http\Logout\LogoutUrlGenerator;
 
 class UserController extends AbstractController
 {
@@ -43,7 +45,7 @@ class UserController extends AbstractController
 
         if (!$user) {
             $this->addFlash('danger', 'Vous devez être connecté.');
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app.login');
         }
 
         // Supprimer le user
