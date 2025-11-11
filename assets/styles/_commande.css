@@ -1,0 +1,103 @@
+/* === Cage principale (centrée, 604px max) === */
+.cagecmd {
+    max-width: 604px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: var(--font-main, 'Inter'), sans-serif;
+    color: var(--color-text, #222);
+    background-color: #fdf9f3;
+}
+
+/* === Titre principal === */
+.cagecmd h2 {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* === Blocs internes (plein largeur de .cagecmd) === */
+.bloc-commande {
+    width: 100%;
+    background-color: #fffdf7;
+    border: 1px solid #e5e5e5;
+    padding: 35px 25px 45px 25px;
+    margin-bottom: 45px;
+    border-radius: 0;
+    text-align: center;
+}
+
+/* === Sous-titres 14px alignés à gauche === */
+.sous-titre {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-dark, #111);
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* === Tableau inchangé === */
+.table-commandes {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #fffdf7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.table-commandes th,
+.table-commandes td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 15px;
+}
+
+.table-commandes th {
+    background-color: #f3f0e8;
+    font-weight: 600;
+}
+
+.table-commandes tr:nth-child(even) { background-color: #faf8f4; }
+.table-commandes tr:hover { background-color: #f0ede8; }
+
+/* === Boutons (centrés, largeur 479px) === */
+.btn-panier-valider {
+    display: block;
+    background-color: #444444;
+    color: #ffffff;
+    font-family: var(--font-main, 'Inter'), sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    padding: 22px 0;
+    border: none;
+    transition: all 0.25s ease-in-out;
+    width: 479px;
+    margin: 0 auto;
+}
+
+.btn-panier-valider:hover { background-color: #333333; }
+
+.btn-api { background-color: #444; }
+.btn-supprimer { background-color: #444; }
+.btn-supprimer:hover { background-color: #922; }
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .cagecmd { padding: 0 16px; }
+
+    .bloc-commande {
+        padding: 25px 15px 35px 15px;
+    }
+
+    .table-commandes th,
+    .table-commandes td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn-panier-valider {
+        width: 100%;
+        border-radius: 8px;
+    }
+}

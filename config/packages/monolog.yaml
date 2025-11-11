@@ -1,0 +1,17 @@
+monolog:
+    channels: [security, jwt]
+    handlers:
+        main:
+            type: stream
+            path: "%kernel.project_dir%/var/log/dev.log"
+            level: debug
+        security:
+            type: stream
+            path: "%kernel.project_dir%/var/log/security.log"
+            level: debug
+            channels: [security]
+        jwt:
+            type: stream
+            path: "%kernel.project_dir%/var/log/jwt.log"
+            level: debug
+            channels: [jwt]

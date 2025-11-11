@@ -1,0 +1,66 @@
+{% extends 'main.html.twig' %}
+{% block main_class %}main-commandes{% endblock %}
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    <div class="cagecmd mx-auto my-5">
+        <h2 class="text-center mb-5">Mon compte</h2>
+
+        {# === Bloc 1 : Mes commandes === #}
+        <div class="bloc-commande bloc-commande-1 mx-auto mb-5">
+            <h3 class="sous-titre text-start mb-4">Mes commandes</h3>
+
+            {% if commandes is not empty %}
+                <table class="table-commandes w-100 text-center">
+                    <thead>
+                    <tr>
+                        <th>N° Commande</th>
+                        <th>Date</th>
+                        <th>Montant total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for commande in commandes %}
+                        <tr>
+                            <td>{{ commande.id }}</td>
+                            <td>{{ commande.date|date('d/m/Y') }}</td>
+                            <td>{{ commande.total|number_format(2, ',', ' ') }} €</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="text-center py-5">
+                    <p>Aucune commande enregistrée pour le moment.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        {# === Bloc 2 : Mon accès API === #}
+        <div class="bloc-commande bloc-commande-2 mx-auto mb-5">
+            <h3 class="sous-titre text-start mb-4">Mon accès API</h3>
+            {% if app.user and app.user.apiActive %}
+                <a href="{{ path('api.activer') }}"
+                   class="btn-panier-valider btn-api d-block mx-auto"
+                   data-confirm="Confirmez-vous la désactivation de votre accès API ?">
+                    Désactiver mon accès API
+                </a>
+            {% else %}
+                <a href="{{ path('api.activer') }}"
+                   class="btn-panier-valider btn-api d-block mx-auto"
+                   data-confirm="Confirmez-vous l’activation de votre accès API ?">
+                    Activer mon accès API
+                </a>
+            {% endif %}
+        </div>
+
+        {# === Bloc 3 : Supprimer mon compte === #}
+        <div class="bloc-commande bloc-commande-3 mx-auto">
+            <a href="{{ path('user.delete') }}"
+               class="btn-panier-valider btn-supprimer d-block mx-auto"
+               data-confirm="Confirmez-vous la suppression de votre Compte ?">
+                Supprimer mon compte
+            </a>
+        </div>
+    </div>
+{% endblock %}

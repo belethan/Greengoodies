@@ -1,20 +1,20 @@
 {# === MODAL DE CONFIRMATION GLOBALE === #}
+{# === Modale de confirmation compatible avec global.js === #}
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
+        <div class="modal-content border-0 shadow-sm">
             <div class="modal-header bg-light">
-                <h5 class="modal-title fw-semibold" id="confirmModalLabel">Confirmation</h5>
+                <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
             <div class="modal-body">
-                <p id="confirmModalMessage" class="mb-0">
-                    Confirmez-vous cette action ?
-                </p>
+                <p id="confirmModalMessage" class="mb-0"></p>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
+            <div class="modal-footer border-0">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-danger" id="confirmModalYesBtn">Confirmer</button>
+                <button type="button" id="confirmModalYesBtn" class="btn btn-danger">Confirmer</button>
             </div>
         </div>
     </div>
 </div>
+

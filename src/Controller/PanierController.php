@@ -190,6 +190,24 @@ class PanierController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Votre commande a été validée avec succès.');
-        return $this->redirectToRoute('app.commandes');
+        return $this->redirectToRoute('app.panier.commandes');
+    }
+    #[Route('/commandes', name: 'commandes', methods: ['GET'])]
+    public function indexcommande(PanierRepository $panierRepository): Response
+    {
+        $commandes = $panierRepository->findCommandesAvecTotal();
+
+        // Formatage des données pour l'affichage
+        $listeCommandes = array_map(function ($commande) {
+            return [
+                'id' => str_pad($commande['idCommande'], 4, '0', STR_PAD_LEFT),
+                'date' => $commande['dateCommande'] ? $commande['dateCommande']->format('d/m/Y') : '',
+                'total' => number_format($commande['montantTotal'], 2, ',', ' ') . ' €',
+            ];
+        }, $commandes);
+
+        return $this->render('pages/commandes.html.twig', [
+            'commandes' => $listeCommandes,
+        ]);
     }
 }

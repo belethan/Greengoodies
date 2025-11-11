@@ -38,4 +38,27 @@ class PanierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Retourne toutes les commandes (modePanier = true)
+     * avec le montant total calculé par la base.
+     */
+    public function findCommandesAvecTotal(): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('
+                p.id AS idCommande,
+                p.dateCmde AS dateCommande,
+                SUM(lp.quantite * pr.prix) AS montantTotal
+            ')
+            ->leftJoin('p.lignePaniers', 'lp')
+            ->leftJoin('lp.produit', 'pr')
+            ->andWhere('p.modePanier = :val')
+            ->setParameter('val', true)
+            ->groupBy('p.id, p.dateCmde')
+            ->orderBy('p.id', 'ASC')
+            ->addOrderBy('p.dateCmde', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
