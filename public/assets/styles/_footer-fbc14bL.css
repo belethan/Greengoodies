@@ -1,0 +1,14 @@
+footer {
+    background-color: var(--color-white);
+    text-align: right;
+    padding: 1rem 2rem;
+    font-family: var(--font-main), sans-serif;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    height: 81px;                        /* <-- hauteur fixe */
+}
+
+footer a {
+    color: var(--color-primary);
+    text-decoration: none;
+}

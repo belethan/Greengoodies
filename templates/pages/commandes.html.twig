@@ -23,7 +23,7 @@
                     {% for commande in commandes %}
                         <tr>
                             <td>{{ commande.id }}</td>
-                            <td>{{ commande.date|date('d/m/Y') }}</td>
+                            <td>{{ commande.date}}</td>
                             <td>{{ commande.total|number_format(2, ',', ' ') }} €</td>
                         </tr>
                     {% endfor %}

@@ -1,0 +1,125 @@
+/* === Panier principal === */
+.cage {
+    max-width: 735px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: var(--font-main, 'Inter'), sans-serif;
+    color: var(--color-text, #222);
+    background-color: #fdf9f3
+}
+
+/* === Titre === */
+.cage h2 {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 0;
+}
+
+/* === Lien vider panier === */
+.cage a.text-muted {
+    font-size: 14px;
+    color: #999 !important;
+    text-decoration: none;
+}
+
+.cage a.text-muted:hover {
+    text-decoration: underline;
+}
+
+/* === Ligne panier === */
+.lignepanier {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    background-color: #fffdf7;
+}
+
+.lignepanier img {
+    height: 142px;
+    width: 132px;
+    padding-right: 35px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.lignepanier h4 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.lignepanier .text-muted {
+    font-size: 15px;
+    color: #777;
+}
+
+.lignepanier .fw-bold {
+    font-size: 16px;
+    color: var(--color-dark, #111);
+    margin-top: 4px;
+}
+
+/* === Pied de panier === */
+.panierfooter {
+    text-align: right;
+    margin-top: 40px;
+}
+
+.panierfooter p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.panierfooter .text-muted {
+    font-size: 14px;
+    color: #8c8a89 !important;
+}
+
+/* === Bouton "Valider la commande" === */
+.btn-panier-valider {
+    display: block;
+    width: 100%;                 /* prend toute la largeur image + texte */
+    background-color: #444444;
+    color: #ffffff;
+    font-family: var(--font-main, 'Inter'), sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    padding: 22px 0;
+    border: none;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-panier-valider:hover {
+    background-color: #333333;
+}
+
+
+    /* === Responsive === */
+@media (max-width: 768px) {
+    .lignepanier {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .lignepanier img {
+        margin-bottom: 15px;
+        padding-right: 0;
+        width: 60%;
+        height: auto;
+    }
+
+    .panierfooter {
+        text-align: center;
+    }
+    .btn-panier-valider {
+        border-radius: 8px;
+    }
+
+}

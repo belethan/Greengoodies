@@ -1,0 +1,26 @@
+header.navbar {
+    background-color: var(--color-light-bg);
+    font-family: var(--font-main), sans-serif;
+}
+
+header .navbar-brand {
+    font-weight: 600;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+header .navbar-brand img {
+    height: 32px;
+}
+
+header .nav-link {
+    color: var(--color-text);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+header .nav-link:hover {
+    color: var(--color-primary);
+}
