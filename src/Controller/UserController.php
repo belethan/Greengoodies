@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\User;
@@ -13,10 +12,11 @@ use Symfony\Component\Security\Http\Logout\LogoutUrlGenerator;
 
 class UserController extends AbstractController
 {
-    #[Route('api/activer', name: 'api.activer')]
+    #[Route('/user/api/activer', name: 'api.activer')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function toggleApi(EntityManagerInterface $em): RedirectResponse
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         if (!$user) {
@@ -24,13 +24,16 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app.login');
         }
 
+        // Inversion du booléen API
         $user->setApiActive(!$user->isApiActive());
+
         $em->persist($user);
         $em->flush();
 
         $message = $user->isApiActive()
             ? 'Accès API activé avec succès.'
             : 'Accès API désactivé.';
+
         $this->addFlash('success', $message);
 
         return $this->redirectToRoute('app.panier.commandes');
@@ -48,13 +51,11 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app.login');
         }
 
-        // Supprimer le user
         $em->remove($user);
         $em->flush();
 
         $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
 
-        // Redirection vers logout automatique
         $logoutUrl = $logoutUrlGenerator->getLogoutPath();
         return $this->redirect($logoutUrl);
     }

@@ -1,68 +1,81 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         App\Entity\User:
-            algorithm: auto    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+            algorithm: auto
+
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
-        # used to reload user from session & other features (e.g. switch_user)
+
     firewalls:
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        #  FIREWALL PRINCIPAL — authentification par SESSION
         main:
-            pattern: ^/(?!api)
+            pattern: ^/(?!api)   # Tout sauf /api/...
             lazy: true
             provider: app_user_provider
 
             form_login:
-                login_path: app.login    # Route pour le formulaire de login
-                check_path: app.login    # Route de soumission du formulaire
-                username_parameter: email  # L'email est utilisé pour l'identification
-                password_parameter: password  # Le mot de passe
-                default_target_path: app.principale  # Après la connexion, rediriger vers la page d'accueil
+                login_path: app.login
+                check_path: app.login
+                username_parameter: email
+                password_parameter: password
+                default_target_path: app.principale
                 enable_csrf: true
 
             logout:
-                path: app.logout  # La route pour la déconnexion
-                target: app.principale   # Où rediriger après la déconnexion
+                path: app.logout
+                target: app.principale
 
             stateless: false
+
+        # LOGIN JWT — route publique pour obtenir un token
         login:
             pattern: ^/api/login$
             stateless: true
+            provider: app_user_provider
+
+            # Si tu veux bloquer login si api_active = false, activer :
+            # user_checker: App\Security\UserChecker
+
             json_login:
                 check_path: /api/login
                 username_path: username
                 password_path: password
-            provider: app_user_provider
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
+        # FIREWALL API — sécurise *tout le reste des routes /api/*
         api:
-            pattern: ^/api/
+            pattern: ^/api
             stateless: true
             provider: app_user_provider
             jwt: ~
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+            # Si tu veux vérifier api_active avant d'autoriser le token :
+            # user_checker: App\Security\UserChecker
+
     access_control:
+        # Route de login API (publique)
         - { path: ^/api/login$, roles: PUBLIC_ACCESS }
+        # ❗ La route toggle ne doit PAS passer par le firewall API — on la sort du /api/
+        - { path: ^/user/api/activer$, roles: IS_AUTHENTICATED_FULLY }
+        # Toute API (hors login) => JWT obligatoire
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        # Routes du site
         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:
         password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon
+                cost: 4
+                time_cost: 3
+                memory_cost: 10

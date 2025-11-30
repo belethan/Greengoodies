@@ -162,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->apiActive;
     }
 
-    public function setApiActive(bool $apiActive): static
+    public function setApiActive(bool $apiActive): self
     {
         $this->apiActive = $apiActive;
 
