@@ -31,7 +31,7 @@
                                    class="form-control" required>
                         </div>
 
-                        {# ✅ Champ CSRF obligatoire #}
+                        {# Champ CSRF obligatoire #}
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                         <div class="form-group mt-4">

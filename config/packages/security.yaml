@@ -40,6 +40,7 @@ security:
             pattern: ^/api/login$
             stateless: true
             provider: app_user_provider
+            user_checker: App\Security\UserChecker
 
             # Si tu veux bloquer login si api_active = false, activer :
             # user_checker: App\Security\UserChecker
@@ -57,6 +58,7 @@ security:
             stateless: true
             provider: app_user_provider
             jwt: ~
+            user_checker: App\Security\UserChecker
 
             # Si tu veux vérifier api_active avant d'autoriser le token :
             # user_checker: App\Security\UserChecker
