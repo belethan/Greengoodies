@@ -192,10 +192,18 @@ class PanierController extends AbstractController
         $this->addFlash('success', 'Votre commande a été validée avec succès.');
         return $this->redirectToRoute('app.panier.commandes');
     }
+
     #[Route('/commandes', name: 'commandes', methods: ['GET'])]
     public function indexcommande(PanierRepository $panierRepository): Response
     {
-        $commandes = $panierRepository->findCommandesAvecTotal();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute('app.login');
+        }
+
+        $commandes = $panierRepository->findCommandesAvecTotalByUser($user);
 
         // Formatage des données pour l'affichage
         $listeCommandes = array_map(function ($commande) {

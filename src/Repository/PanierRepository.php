@@ -61,4 +61,24 @@ class PanierRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findCommandesAvecTotalByUser(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('
+            p.id AS idCommande,
+            p.dateCmde AS dateCommande,
+            SUM(lp.quantite * pr.prix) AS montantTotal
+        ')
+            ->leftJoin('p.lignePaniers', 'lp')
+            ->leftJoin('lp.produit', 'pr')
+            ->andWhere('p.modePanier = 1')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->groupBy('p.id, p.dateCmde')
+            ->orderBy('p.dateCmde', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }
