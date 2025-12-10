@@ -32,7 +32,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles;
 
-    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(
+        targetEntity: Panier::class,
+        mappedBy: 'user',
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true
+    )]
     private Collection $paniers;
 
     #[ORM\Column(type: 'boolean', options: ['default' => 0])]

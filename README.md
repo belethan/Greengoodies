@@ -26,6 +26,70 @@ la liste des produits de la boutique.
 ● vérifier l’ensemble des données saisies dans les formulaires avec Symfony (une
 vérification en JS peut être faite en plus, mais ce n’est pas obligatoire).
 
+## 🧑‍ installation symfony et les bundles associés
+
+On commence par récupérer le projet avec git :
+`git clone https://github.com/belethan/GreenGoodies.git
+cd GreenGoodies
+`
+on enchaîne les commandes suivantes :
+
+composer install
+
+Si on utilise Symfony CLI, vérifier le PHP FPM pris en charge
+    * symfony local:php:list
+
+    * modification .env.local
+Mise à jour du lien vers la base de données
+    * DATABASE_URL="mysql://user:password@127.0.0.1:3306/green_goodies?charset=utf8mb4"`
+
+On importe le dump de la base
+    * mysql -u root -p green_goodies < green_goodies_dump.sql
+
+Gestion des assets
+
+    * php bin/console asset-map:compile`
+
+
+### Les bundles Symfony indispensables pour faire fonctionner le site Green Goodies, incluant :
+
+* Authentification par formulaire
+* Gestion des rôles
+* Sécurité Symfony
+
+* JWT pour l’API
+* Outils Doctrine / Fixtures
+ 
+
+
+### PasswordHasher + Validator + Form
+
+* composer require symfony/password-hasher
+* composer require symfony/validator
+* composer require symfony/form
+* composer require symfony/http-foundation
+* composer require symfony/twig-bundle
+
+### Doctrine ORM
+
+* composer require symfony/orm-pack
+* composer require doctrine/migrations
+
+### JWT (authentification API)
+
+* composer require "lexik/jwt-authentication-bundle"
+* php bin/console lexik:jwt:generate-keypair
+* composer require symfony/serializer-pack
+
+### Fixtures
+
+* composer require --dev orm-fixtures
+* composer require fakerphp/faker --dev
+
+
+
+
+
 ## 📘 Présentation du site Green Goodies
 
 ### Document d’introduction technique

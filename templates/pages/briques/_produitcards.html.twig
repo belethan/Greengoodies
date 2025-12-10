@@ -17,8 +17,6 @@
                         <p class="fw-bold mb-3">{{ produit.prix|number_format(2, ',', ' ') }} €</p>
                     </div>
                     <div>
-                        {# {{ path('produit_show', { id: produit.id }) }} #}
-                        {#  TODO: penser à changer mettre accès à la fiche produit #}
                         <a href="{{ path('app.produit', { id: produit.id }) }}" class="product-link mt-auto">
                             Voir le produit
                         </a>

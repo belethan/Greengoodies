@@ -19,8 +19,9 @@ class Panier
     #[ORM\Column(type: 'boolean')]
     private bool $modePanier = false;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $dateCmde = null;
+
 
     #[ORM\Column(nullable: true, enumType: StatutCommande::class)]
     private ?StatutCommande $statutCmde = null;
@@ -35,7 +36,7 @@ class Panier
     private Collection $lignePaniers;
 
     #[ORM\ManyToOne(inversedBy: 'paniers')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $user = null;
 
 

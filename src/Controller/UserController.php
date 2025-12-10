@@ -41,7 +41,7 @@ class UserController extends AbstractController
 
     #[Route('/user/delete', name: 'user.delete', methods: ['POST', 'GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function delete(EntityManagerInterface $em, LogoutUrlGenerator $logoutUrlGenerator): RedirectResponse
+    public function delete(EntityManagerInterface $em): RedirectResponse
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -51,12 +51,14 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app.login');
         }
 
+        // Suppression du compte
         $em->remove($user);
         $em->flush();
 
         $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
 
-        $logoutUrl = $logoutUrlGenerator->getLogoutPath();
-        return $this->redirect($logoutUrl);
+        // Déconnexion automatique
+        return $this->redirectToRoute('app.logout');
     }
+
 }

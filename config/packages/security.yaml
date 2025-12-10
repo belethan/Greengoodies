@@ -42,7 +42,7 @@ security:
             provider: app_user_provider
             user_checker: App\Security\UserChecker
 
-            # Si tu veux bloquer login si api_active = false, activer :
+            # bloquer login si api_active = false, activer :
             # user_checker: App\Security\UserChecker
 
             json_login:
@@ -60,7 +60,7 @@ security:
             jwt: ~
             user_checker: App\Security\UserChecker
 
-            # Si tu veux vérifier api_active avant d'autoriser le token :
+            # vérifier api_active avant d'autoriser le token :
             # user_checker: App\Security\UserChecker
 
     access_control:

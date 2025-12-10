@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\LignePanier;
 use App\Entity\Panier;
+use App\Entity\User;
 use App\Enum\StatutCommande;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
@@ -11,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/panier', name: 'app.panier.')]
@@ -79,7 +80,7 @@ class PanierController extends AbstractController
         if (!$panier) {
             $panier = new Panier();
             $panier->setUser($user);
-            $panier->setModePanier(false); // panier actif
+            $panier->setModePanier(false); // mode panier actif
             $em->persist($panier);
         }
 
@@ -206,7 +207,7 @@ class PanierController extends AbstractController
         $commandes = $panierRepository->findCommandesAvecTotalByUser($user);
 
         // Formatage des données pour l'affichage
-        $listeCommandes = array_map(function ($commande) {
+        $listeCommandes = array_map(static function ($commande) {
             return [
                 'id' => str_pad($commande['idCommande'], 4, '0', STR_PAD_LEFT),
                 'date' => $commande['dateCommande'] ? $commande['dateCommande']->format('d/m/Y') : '',
